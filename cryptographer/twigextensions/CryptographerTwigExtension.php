@@ -62,6 +62,10 @@ class CryptographerTwigExtension extends \Twig_Extension
         // Get the length of initialisation vector for give cipher method 
         $iv_length = openssl_cipher_iv_length($method);
         
+        // Cipher shorter than expected minimum length
+        if(strlen($data) <= $iv_length)
+            return false;
+        
         // Split the data into initialisation vector and cipher text
         $iv = mb_substr($data, 0, $iv_length);
         
