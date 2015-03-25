@@ -37,6 +37,12 @@ class CryptographerPlugin extends BasePlugin
         ));
     }
     
+    public function onAfterInstall()
+    {
+        // Save plugin settings immediately after install
+        craft()->plugins->savePluginSettings($this, $this->getSettings());
+    }
+    
     public function addTwigExtension()
     {
         Craft::import('plugins.cryptographer.twigextensions.CryptographerTwigExtension');
