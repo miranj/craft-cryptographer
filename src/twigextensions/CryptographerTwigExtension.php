@@ -1,18 +1,26 @@
 <?php
+/**
+ * CryptographerTwigExtension
+ * 
+ * @link      https://miranj.in/
+ * @copyright Copyright (c) 2019 Miranj
+ */
+namespace miranj\cryptographer\twigextensions;
 
-namespace Craft;
+use Craft;
+use Craft\web\twig\Environment;
+use miranj\cryptographer\Plugin;
+use Twig_Extension;
+use Twig_Filter;
+use Twig_Markup;
 
-use Twig_Extension;  
-use Twig_Filter_Method;
-
-class CryptographerTwigExtension extends \Twig_Extension
+class CryptographerTwigExtension extends Twig_Extension
 {
-    
     protected $secret = null;
     
     public function __construct()
     {
-        $this->secret = craft()->plugins->getPlugin('Cryptographer')->getSettings()->getAttribute('secret');
+        $this->secret = Plugin::getInstance()->settings->secret;
     }
     
     public function getName()
@@ -22,21 +30,22 @@ class CryptographerTwigExtension extends \Twig_Extension
     
     public function getFilters()
     {
-        return array(
-            'encrypt'   => new \Twig_Filter_Method($this, 'encryptFilter'),
-            'decrypt'   => new \Twig_Filter_Method($this, 'decryptFilter'),
-        );
+        $needs_env = ['needs_environment' => true];
+        return [
+            new Twig_Filter('encrypt_legacy', [$this, 'legacyEncryptFilter'], $needs_env),
+            new Twig_Filter('decrypt_legacy', [$this, 'legacyDecryptFilter'], $needs_env),
+        ];
     }
+    
     
     /**
     * Encrypts text using the given cipher method and
     * initialisation vector. If no intitialisation vector is provided
     * a random value is used for each encryption operation.
     */
-    public function encryptFilter($plaintext, $method = 'AES-256-CBC', $iv = null)
+    public function legacyEncryptFilter(Environment $env, $plaintext, $method = 'AES-256-CBC', $iv = null)
     {
-        
-        $charset = craft()->templates->getTwig()->getCharset();
+        $charset = $env->getCharset();
         
         // Generate an initialisation vector of the required length
         $iv = mb_substr(md5($iv ?: rand()), 0, openssl_cipher_iv_length($method));
@@ -47,17 +56,16 @@ class CryptographerTwigExtension extends \Twig_Extension
         // Append the initilisation vector before the cipher text
         $data   = $iv.$cipher;
         
-        return new \Twig_Markup($data, $charset);
-        
+        return new Twig_Markup($data, $charset);
     }
     
     
     /**
     * Decrypts data by the given cipher method.
     */
-    public function decryptFilter($data, $method = 'AES-256-CBC')
+    public function legacyDecryptFilter(Environment $env, $data, $method = 'AES-256-CBC')
     {
-        $charset = craft()->templates->getTwig()->getCharset();
+        $charset = $env->getCharset();
         
         // Get the length of initialisation vector for give cipher method 
         $iv_length = openssl_cipher_iv_length($method);
@@ -74,7 +82,7 @@ class CryptographerTwigExtension extends \Twig_Extension
         // Decrypt the cipher
         $plaintext = openssl_decrypt($cipher, $method, $this->secret, 0, $iv);
         
-        return new \Twig_Markup($plaintext, $charset);
+        return new Twig_Markup($plaintext, $charset);
     }
     
 }

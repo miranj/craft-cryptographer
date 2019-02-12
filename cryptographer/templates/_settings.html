@@ -1,9 +1,0 @@
-{% import '_includes/forms' as forms %}
-
-{{ forms.textField({
-    label: "Secret"|t,
-    instructions: "This random text is used for encryption / decryption and must be kept secret."|t,
-    id: 'secret',
-    name: 'secret',
-    value: settings.secret,
-}) }}

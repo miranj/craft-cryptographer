@@ -1,0 +1,40 @@
+{
+  "name": "miranj/craft-cryptographer",
+  "description": "Adds Twig filters to perform cryptographic operations.",
+  "type": "craft-plugin",
+  "version": "1.0.0-dev",
+  "keywords": [
+    "craft",
+    "craftcms",
+    "encode",
+    "decode",
+    "cryptography"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Miranj",
+      "homepage": "https://miranj.in"
+    }
+  ],
+  "support": {
+    "docs": "https://github.com/miranj/craft-cryptographer/blob/v1/README.md",
+    "issues": "https://github.com/miranj/craft-cryptographer/issues",
+    "source": "https://github.com/miranj/craft-cryptographer"
+  },
+  "require": {
+    "craftcms/cms": "^3.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "miranj\\cryptographer\\": "src/"
+    }
+  },
+  "extra": {
+    "name": "Cryptographer",
+    "handle": "cryptographer",
+    "hasCpSettings": true,
+    "changelogUrl": "https://raw.githubusercontent.com/miranj/craft-cryptographer/v1/CHANGELOG.md",
+    "class": "miranj\\cryptographer\\Plugin"
+  }
+}
