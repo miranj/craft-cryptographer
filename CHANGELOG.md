@@ -9,10 +9,11 @@ Release notes for the Cryptographer Craft CMS plugin.
 ### Added
 - Added Craft 3 compatibility.
 - Added a `cryptographer` service that handles all encryption/decryption operations.
+- Added a URL safe `encrypt` Twig filter with a counterpart `decrypt` filter.
 
 ### Changed
-- Renamed `encrypt` to `encrypt_legacy`.
-- Renamed `decrypt` to `decrypt_legacy`.
+- Renamed v0.x behaviour `encrypt` filter to `encrypt_legacy`.
+- Renamed v0.x behaviour `decrypt` filter to `decrypt_legacy`.
 - Uses `Craft::$app->config->general->securityKey` as the default secret key.
 
 

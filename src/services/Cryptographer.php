@@ -3,6 +3,7 @@
 namespace miranj\cryptographer\services;
 
 use Craft;
+use craft\helpers\StringHelper;
 use miranj\cryptographer\Plugin;
 use yii\base\Component;
 
@@ -13,11 +14,34 @@ use yii\base\Component;
 */
 class Cryptographer extends Component
 {
+    private $_prefix = 'crypt:';
     protected $secret = null;
     
     public function __construct()
     {
         $this->secret = Plugin::getInstance()->settings->secret ?: Craft::$app->config->general->securityKey;
+    }
+    
+    /**
+     * URL safe encryption of the passed string
+     */
+    public function encrypt(string $str): string
+    {
+        $code = $this->_prefix.Craft::$app->getSecurity()->encryptByKey($str);
+        $code = StringHelper::base64UrlEncode($code);
+        return $code;
+    }
+    
+    /**
+     * Decrypts URL safe strings encoded by `encrypt`
+     */
+    public function decrypt(string $code): string
+    {
+        $str = StringHelper::base64UrlDecode($code);
+        if (strncmp($str, $this->_prefix, strlen($this->_prefix)) === 0) {
+            $str = Craft::$app->getSecurity()->decryptByKey(substr($str, strlen($this->_prefix)));
+        }
+        return $str;
     }
     
     /**
