@@ -12,6 +12,7 @@ namespace miranj\cryptographer;
 
 use Craft;
 use miranj\cryptographer\models\Settings;
+use miranj\cryptographer\services\Cryptographer;
 use miranj\cryptographer\twigextensions\CryptographerTwigExtension;
 
 
@@ -28,6 +29,9 @@ class Plugin extends craft\base\Plugin
         
         // Add in our Twig extension
         Craft::$app->view->registerTwigExtension(new CryptographerTwigExtension());
+        
+        // Set services as components
+        $this->set('cryptographer', Cryptographer::class);
         
         Craft::info(
             Craft::t(
