@@ -4,6 +4,7 @@ namespace miranj\cryptographer\services;
 
 use Craft;
 use craft\helpers\StringHelper;
+use Hashids\Hashids;
 use miranj\cryptographer\Plugin;
 use yii\base\Component;
 
@@ -15,12 +16,56 @@ use yii\base\Component;
 class Cryptographer extends Component
 {
     private $_prefix = 'crypt:';
+    private $_hashIds = null;
     protected $secret = null;
     
     public function __construct()
     {
         $this->secret = Plugin::getInstance()->settings->secret ?: Craft::$app->config->general->securityKey;
     }
+    
+    
+    
+    // ======================
+    // = Hashids (insecure) =
+    // ======================
+    
+    public function getHashIds()
+    {
+        if ($this->_hashIds === null) {
+            $this->_hashIds = new Hashids($this->secret, 15);
+        }
+        return $this->_hashIds;
+    }
+    
+    /**
+     * Generate a URL safe hash by encoding numbers
+     * 
+     * @param   mixed   number(s) to be hashed 1 | "12" | [1, 2]
+     * @return  string  URL safe hashed string [A-Za-z0-9]
+     */
+    public function hashIdsEncode($number): string
+    {
+        return $this->getHashIds()->encode($number);
+    }
+    
+    /**
+     * Decode a Hashid'd string
+     * 
+     * @param   string  URL safe hashed string [A-Za-z0-9]
+     * @return  [int]   list of decoded numbers [1] | [12] | [1, 2]
+     */
+    public function hashIdsDecode(string $str): array
+    {
+        $number = $this->getHashIds()->decode($str);
+        return $number;
+    }
+    
+    
+    
+    // =====================
+    // = Secure Encryption =
+    // =====================
     
     /**
      * URL safe encryption of the passed string
@@ -43,6 +88,12 @@ class Cryptographer extends Component
         }
         return $str;
     }
+    
+    
+    
+    // ====================================
+    // = DEPRECATED Encryption (insecure) =
+    // ====================================
     
     /**
     * DEPRECATED

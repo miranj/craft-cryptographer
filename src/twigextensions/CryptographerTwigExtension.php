@@ -21,11 +21,31 @@ class CryptographerTwigExtension extends Twig_Extension
     {
         $needs_env = ['needs_environment' => true];
         return [
+            new Twig_SimpleFilter('hashids_encode', [$this, 'hashidsEncodeFilter']),
+            new Twig_SimpleFilter('hashids_decode', [$this, 'hashidsDecodeFilter']),
             new Twig_SimpleFilter('encrypt', [$this, 'encryptFilter']),
             new Twig_SimpleFilter('decrypt', [$this, 'decryptFilter']),
             new Twig_Filter('encrypt_legacy', [$this, 'legacyEncryptFilter'], $needs_env),
             new Twig_Filter('decrypt_legacy', [$this, 'legacyDecryptFilter'], $needs_env),
         ];
+    }
+    
+    /**
+     * @param   int     number to be hashid'd
+     * @return  string  hashid'd result
+     */
+    public function hashidsEncodeFilter($str): string
+    {
+        return Plugin::getInstance()->cryptographer->hashIdsEncode($str);
+    }
+    
+    /**
+     * @param   string      hashid to be decoded
+     * @return  int|null    number that was originally encoded
+     */
+    public function hashidsDecodeFilter($str): string
+    {
+        return implode(',', Plugin::getInstance()->cryptographer->hashIdsDecode((string)$str));
     }
     
     public function encryptFilter($str): string
