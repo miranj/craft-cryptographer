@@ -13,8 +13,8 @@ Release notes for the Cryptographer Craft CMS plugin.
 - Added URL safe [Hashids](https://hashids.org/) support with Twig filters `hashids_encode` & `hashids_decode`.
 
 ### Changed
-- Renamed v0.x behaviour `encrypt` filter to `encrypt_legacy`.
-- Renamed v0.x behaviour `decrypt` filter to `decrypt_legacy`.
+- Renamed v0.x behaviour `encrypt` filter to `maskLegacy`.
+- Renamed v0.x behaviour `decrypt` filter to `unmaskLegacy`.
 - Uses `Craft::$app->config->general->securityKey` as the default secret key.
 
 

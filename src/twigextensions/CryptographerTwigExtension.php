@@ -21,12 +21,12 @@ class CryptographerTwigExtension extends Twig_Extension
     {
         $needs_env = ['needs_environment' => true];
         return [
-            new Twig_SimpleFilter('hashids_encode', [$this, 'hashidsEncodeFilter']),
-            new Twig_SimpleFilter('hashids_decode', [$this, 'hashidsDecodeFilter']),
+            new Twig_SimpleFilter('maskNumbers', [$this, 'hashidsEncodeFilter']),
+            new Twig_SimpleFilter('unmaskNumbers', [$this, 'hashidsDecodeFilter']),
             new Twig_SimpleFilter('encrypt', [$this, 'encryptFilter']),
             new Twig_SimpleFilter('decrypt', [$this, 'decryptFilter']),
-            new Twig_Filter('encrypt_legacy', [$this, 'legacyEncryptFilter'], $needs_env),
-            new Twig_Filter('decrypt_legacy', [$this, 'legacyDecryptFilter'], $needs_env),
+            new Twig_Filter('maskLegacy', [$this, 'legacyEncryptFilter'], $needs_env),
+            new Twig_Filter('unmaskLegacy', [$this, 'legacyDecryptFilter'], $needs_env),
         ];
     }
     
