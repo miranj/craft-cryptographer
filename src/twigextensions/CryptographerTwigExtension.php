@@ -8,7 +8,6 @@ use miranj\cryptographer\Plugin;
 use Twig_Extension;
 use Twig_Filter;
 use Twig_Markup;
-use Twig_SimpleFilter;
 
 class CryptographerTwigExtension extends Twig_Extension
 {
@@ -21,10 +20,10 @@ class CryptographerTwigExtension extends Twig_Extension
     {
         $needs_env = ['needs_environment' => true];
         return [
-            new Twig_SimpleFilter('maskNumbers', [$this, 'hashidsEncodeFilter']),
-            new Twig_SimpleFilter('unmaskNumbers', [$this, 'hashidsDecodeFilter']),
-            new Twig_SimpleFilter('encrypt', [$this, 'encryptFilter']),
-            new Twig_SimpleFilter('decrypt', [$this, 'decryptFilter']),
+            new Twig_Filter('maskNumbers', [$this, 'hashidsEncodeFilter']),
+            new Twig_Filter('unmaskNumbers', [$this, 'hashidsDecodeFilter']),
+            new Twig_Filter('encrypt', [$this, 'encryptFilter']),
+            new Twig_Filter('decrypt', [$this, 'decryptFilter']),
             new Twig_Filter('maskLegacy', [$this, 'legacyEncryptFilter'], $needs_env),
             new Twig_Filter('unmaskLegacy', [$this, 'legacyDecryptFilter'], $needs_env),
         ];
