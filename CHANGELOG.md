@@ -16,6 +16,7 @@ Release notes for the Cryptographer Craft CMS plugin.
 - Renamed v0.x behaviour `encrypt` filter to `maskLegacy`.
 - Renamed v0.x behaviour `decrypt` filter to `unmaskLegacy`.
 - Uses `Craft::$app->config->general->securityKey` as the default secret key.
+- Removed secret key setting from the Control Panel UI.
 
 
 
