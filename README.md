@@ -1,42 +1,22 @@
 Cryptographer
 =============
 
-A [Craft CMS][craft] plugin that adds [Twig][twig] filters to perform cryptographic operations.
+A [Craft CMS][craft] 3 plugin that adds [Twig][twig] filters to perform cryptographic operations.
 
-[craft]:http://buildwithcraft.com/
-[twig]:http://twig.sensiolabs.org/
-
-
-
-Requirements
-------------
-This plugin requires Craft CMS 3.0.0 or later. The Craft 2 version is availabe in [the `v0` branch](https://github.com/miranj/craft-cryptographer/tree/v0).
+[craft]:https://craftcms.com/
+[twig]:https://twig.symfony.com/
 
 
 
-Installation
-------------
-
-You can install this plugin from the [Plugin Store][ps] or with Composer.
-
-[ps]:https://plugins.craftcms.com/cryptographer
-
-#### From the Plugin Store
-Go to the Plugin Store in your project’s Control Panel and search for “Cryptographer”.
-Then click on the “Install” button in its modal window.
-
-#### Using Composer
-Open your terminal and run the following commands:
-
-    # go to the project directory
-    cd /path/to/project
-    
-    # tell composer to use the plugin
-    composer require miranj/craft-cryptographer
-    
-    # tell Craft to install the plugin
-    ./craft install/plugin cryptographer
-    
+Contents
+--------
+- [Usage](#usage)
+  - [Encryption](#encryption)
+  - [Decryption](#decryption)
+- [Installation](#installation)
+- [Requirements](#requirements)
+- [Changelog](./CHANGELOG.md)
+- [License](./LICENSE)
 
 
 
@@ -86,3 +66,41 @@ This filter takes one optional argument.
 ```
 {{ '9b3c72940c8318b7dGbekO6uMVIAxk7UFA1f0A5tTuoqBo1Vn0jRb3ZjN54=' | unmaskLegacy('AES-128-CBC') }}
 ```
+
+
+
+Installation
+------------
+
+You can install this plugin from the [Plugin Store][ps] or with Composer.
+
+[ps]:https://plugins.craftcms.com/cryptographer
+
+#### From the Plugin Store
+Go to the Plugin Store in your project’s Control Panel and search for “Cryptographer”.
+Then click on the “Install” button in its modal window.
+
+#### Using Composer
+Open your terminal and run the following commands:
+
+    # go to the project directory
+    cd /path/to/project
+    
+    # tell composer to use the plugin
+    composer require miranj/craft-cryptographer
+    
+    # tell Craft to install the plugin
+    ./craft install/plugin cryptographer
+    
+
+
+
+Requirements
+------------
+This plugin requires Craft CMS 3.0.0 or later. The Craft 2 version is availabe in [the `v0` branch](https://github.com/miranj/craft-cryptographer/tree/v0).
+
+
+
+---
+
+Brought to you by [Miranj](https://miranj.in/)
