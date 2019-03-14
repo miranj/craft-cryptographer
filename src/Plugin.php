@@ -18,8 +18,6 @@ use miranj\cryptographer\twigextensions\CryptographerTwigExtension;
 
 class Plugin extends craft\base\Plugin
 {
-    public $hasCpSettings = true;
-    
     /**
      * @inheritdoc
      */
@@ -54,23 +52,5 @@ class Plugin extends craft\base\Plugin
     protected function createSettingsModel(): Settings
     {
         return new Settings();
-    }
-    
-    /**
-     * @inheritdoc
-     */
-    protected function settingsHtml(): string
-    {
-        // Get and pre-validate the settings
-        $settings = $this->getSettings();
-        $settings->validate();
-        
-        // Get the settings that are being defined by the config file
-        $overrides = Craft::$app->getConfig()->getConfigFromFile(strtolower($this->handle));
-        
-        return Craft::$app->view->renderTemplate('cryptographer/_settings', [
-            'settings' => $this->getSettings(),
-            'overrides' => array_keys($overrides),
-        ]);
     }
 }

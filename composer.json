@@ -34,7 +34,6 @@
   "extra": {
     "name": "Cryptographer",
     "handle": "cryptographer",
-    "hasCpSettings": true,
     "changelogUrl": "https://raw.githubusercontent.com/miranj/craft-cryptographer/v1/CHANGELOG.md",
     "class": "miranj\\cryptographer\\Plugin"
   }

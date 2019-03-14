@@ -27,11 +27,5 @@ class Settings extends Model
         return [
             [['secret'], 'string'],
         ];
-    }
-    
-    
-    
-    // Protected Methods
-    // =========================================================================
-    
+    }    
 }
