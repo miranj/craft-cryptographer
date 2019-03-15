@@ -1,18 +1,24 @@
 Cryptographer
 =============
 
-A [Craft CMS][craft] 3 plugin that adds [Twig][twig] filters to perform cryptographic operations.
+A [Craft CMS][] 3 plugin that adds [Twig][] filters to perform cryptographic and masking operations. Useful for situations such as:
 
-[craft]:https://craftcms.com/
+- Generating single-use URLs such as for private pages
+- Masking numeric IDs as strings like `dQw4w9WgXcQ` in [`youtube.com/watch?v=dQw4w9WgXcQ`][yt]
+- Generating per-user URLs for users without revealing their username, email or ids
+
+[craft cms]:https://craftcms.com/
 [twig]:https://twig.symfony.com/
+[yt]:https://youtube.com/watch?v=dQw4w9WgXcQ
 
 
 
 Contents
 --------
 - [Usage](#usage)
-  - [Encryption](#encryption)
-  - [Decryption](#decryption)
+  - [Secure Encryption](#secure-encryption)
+  - [Masking Numbers](#masking-numbers)
+  - [Legacy](#legacy)
 - [Configuration](#configuration)
 - [Installation](#installation)
 - [Requirements](#requirements)
@@ -24,10 +30,66 @@ Contents
 Usage
 -----
 
-### Encryption
+Cryptographer offers two broad options to transform data into ciphertext, and back from ciphertext to original data. One is cryptographically secure and based on Craft's [Security component][cs1] (which is in turn [based on Yii's][ys1]). The other is _not secure_ and based on the popular [Hashids][] library. Both options produce URL safe strings.
 
+[hashids]:https://hashids.org/php/
+[cs1]:https://docs.craftcms.com/api/v3/craft-services-security.html
+[ys1]:https://www.yiiframework.com/doc/guide/2.0/en/security-cryptography
+
+
+
+### Secure Encryption
+
+Use this method to encrypt sensitive information. It differs from the native `encenc` filter in that the output is always a URL-safe string. Note that the cipher generated each time will be different. So this is good for generating single use tokens, but not a good candidate for generating permanent URLs.
+
+#### Templating
+```twig
+{{ 'Sensitive data' | encrypt }}
+{{ 'Y3J5cHQ64Q8YoiXmSUYq6c2mcg6YjmVjNTBkNGViNmE4M2FiNTVmYTdkZTUyYjJhZmNjNzY5NWRiNDc5M2ExNzRhZTE1ZWZmMjU2NzFkMDNhMzEyZWIX9Rj4f4vOKB2XCljjXha3aKfJw4c6D-T7zMoXhKpeFw==' | decrypt }}
 ```
-{{ 'This is a secret text.' | maskLegacy }}
+
+#### API
+
+```php
+$ciphertext = \miranj\cryptographer\Plugin::getInstance()->cryptographer->encrypt('Sensitive data');
+$originaltext = \miranj\cryptographer\Plugin::getInstance()->cryptographer->decrypt($ciphertext);
+```
+
+
+
+### Masking Numbers
+
+_Important: These methods should not be considered cryptographically secure. Avoid using them for encoding sensitive data like passwords._
+
+This method converts numbers like 457 into strings like `'qan8deK8'`. Use this method to mask numbers such as element IDs (or a list of IDs) for use inside URLs. It is a wrapper for the popular [Hashids][] library.
+
+#### Templating
+```twig
+{{ user.id | maskNumbers }}
+{{ 'qan8deK8' | unmaskNumbers }}
+```
+
+#### API
+
+```php
+$mask = \miranj\cryptographer\Plugin::getInstance()->cryptographer->maskNumbers([521]);
+$numbers = \miranj\cryptographer\Plugin::getInstance()->cryptographer->unmaskNumbers('qan8deK8');
+```
+
+
+
+### Legacy
+
+_Important: These methods should not be considered cryptographically secure. Avoid using them for encoding sensitive data like passwords._
+
+Cryptographer provides a third method of masking and unmasking strings which is deprecated in v1.x. It is offerred purely for backwards compatibility of sites that were using the Craft 2 version of this plugin (v0.x) and have content that needs to be converted back to the original. 
+
+#### `maskLegacy`
+
+```twig
+{{ 'Do not use for sensitive data' | maskLegacy }}
+{{ 'Do not use for sensitive data' | maskLegacy | url_encode }}
+{{ 'Do not use for sensitive data' | maskLegacy('AES-128-CFB') }}
 ```
 
 This filter takes two optional arguments.
@@ -35,38 +97,18 @@ This filter takes two optional arguments.
 - `$method` — Cipher method to be used. Possible methods can be determined using [`openssl_get_cipher_methods()`][methods]. By default the `AES-256-CBC` method is used.
 - `$iv` — The initialisation vector. If no initialisation vector is provided, a random value is used every time.
 
-#### Tip
-
-Always URL encode the cipher text (using the built-in [`url_encode`](http://twig.sensiolabs.org/doc/filters/url_encode.html) Twig filter) before using it as a URL component.
-
-#### More Examples
-
-```
-{{ 'This is encrypted using the AES-128-CFB method and generates a different cipher each time.' | encrypt('AES-128-CFB') }}
-
-{{ 'This is encrypted using the AES-256-CBC method and generates the same cipher each time.' | encrypt('AES-256-CBC', 'hello') }}
-
-{{ 'hello@example.com' | maskLegacy | url_encode }}
-```
-
 [methods]: http://php.net/manual/en/function.openssl-get-cipher-methods.php
 
+#### `unmaskLegacy`
 
-### Decryption
-
-```
+```twig
 {{ '66e46cfa6029c1484jTssikEhQXOk4BvYXWfu1M82R3Ifh1kVxQYmxoGwKc=' | unmaskLegacy }}
+{{ '9b3c72940c8318b7dGbekO6uMVIAxk7UFA1f0A5tTuoqBo1Vn0jRb3ZjN54=' | unmaskLegacy('AES-128-CBC') }}
 ```
 
 This filter takes one optional argument.
 
 - `$method` — Cipher method to be used. Possible methods can be determined using [`openssl_get_cipher_methods()`][methods]. By default the `AES-256-CBC` method is used.
-
-#### More Examples
-
-```
-{{ '9b3c72940c8318b7dGbekO6uMVIAxk7UFA1f0A5tTuoqBo1Vn0jRb3ZjN54=' | unmaskLegacy('AES-128-CBC') }}
-```
 
 
 
