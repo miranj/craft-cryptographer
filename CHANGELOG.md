@@ -4,7 +4,7 @@ Release notes for the Cryptographer Craft CMS plugin.
 
 
 
-## Unreleased
+## 1.0.0 - 2019-03-15
 
 ### Added
 - Added Craft 3 compatibility.
