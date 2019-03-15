@@ -1,4 +1,4 @@
-<img align="right" src="./src/icon.svg" width="69" height="100" alt="Cryptographer icon">
+<img align="right" src="./src/icon.svg" width="100" height="100" alt="Cryptographer icon">
 
 Cryptographer
 =============
