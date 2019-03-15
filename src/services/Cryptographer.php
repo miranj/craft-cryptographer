@@ -98,11 +98,11 @@ class Cryptographer extends Component
     /**
     * DEPRECATED
     * 
-    * Encrypts text using the given cipher method and
+    * Masks text using the given cipher method and
     * initialisation vector. If no intitialisation vector is provided
     * a random value is used for each encryption operation.
     */
-    public function legacyEncrypt($plaintext, $method = 'AES-256-CBC', $iv = null)
+    public function maskLegacy($plaintext, $method = 'AES-256-CBC', $iv = null)
     {
         // Generate an initialisation vector of the required length
         $iv = mb_substr(md5($iv ?: rand()), 0, openssl_cipher_iv_length($method));
@@ -119,9 +119,9 @@ class Cryptographer extends Component
     /**
      * DEPRECATED
      * 
-     * Decrypts data by the given cipher method.
+     * Unmasks data using the given cipher method.
      */
-    public function legacyDecrypt($data, $method = 'AES-256-CBC')
+    public function unmaskLegacy($data, $method = 'AES-256-CBC')
     {
         // Get the length of initialisation vector for give cipher method
         $iv_length = openssl_cipher_iv_length($method);

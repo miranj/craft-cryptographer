@@ -24,8 +24,8 @@ class CryptographerTwigExtension extends Twig_Extension
             new Twig_Filter('unmaskNumbers', [$this, 'hashidsDecodeFilter']),
             new Twig_Filter('encrypt', [$this, 'encryptFilter']),
             new Twig_Filter('decrypt', [$this, 'decryptFilter']),
-            new Twig_Filter('maskLegacy', [$this, 'legacyEncryptFilter'], $needs_env),
-            new Twig_Filter('unmaskLegacy', [$this, 'legacyDecryptFilter'], $needs_env),
+            new Twig_Filter('maskLegacy', [$this, 'maskLegacyFilter'], $needs_env),
+            new Twig_Filter('unmaskLegacy', [$this, 'unmaskLegacyFilter'], $needs_env),
         ];
     }
     
@@ -61,24 +61,26 @@ class CryptographerTwigExtension extends Twig_Extension
     /**
     * DEPRECATED
     * 
-    * Twig wrapper for legacyEncrypt
+    * Twig wrapper for maskLegacy
+    * Previously called encryptFilter in v0.x
     */
-    public function legacyEncryptFilter(Environment $env, $plaintext, $method='AES-256-CBC', $iv=null)
+    public function maskLegacyFilter(Environment $env, $plaintext, $method='AES-256-CBC', $iv=null)
     {
         $charset = $env->getCharset();
-        $data = Plugin::getInstance()->cryptographer->legacyEncrypt($plaintext, $method, $iv);
+        $data = Plugin::getInstance()->cryptographer->maskLegacy($plaintext, $method, $iv);
         return new Twig_Markup($data, $charset);
     }
     
     /**
     * DEPRECATED
     * 
-    * Twig wrapper for legacyDecrypt
+    * Twig wrapper for unmaskLegacy
+    * Previously called decryptFilter in v0.x
     */
-    public function legacyDecryptFilter(Environment $env, $data, $method='AES-256-CBC')
+    public function unmaskLegacyFilter(Environment $env, $data, $method='AES-256-CBC')
     {
         $charset = $env->getCharset();
-        $plaintext = Plugin::getInstance()->cryptographer->legacyDecrypt($data, $method);
+        $plaintext = Plugin::getInstance()->cryptographer->unmaskLegacy($data, $method);
         return new Twig_Markup($plaintext, $charset);
     }
     
