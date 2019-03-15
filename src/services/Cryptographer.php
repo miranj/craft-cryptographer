@@ -44,7 +44,7 @@ class Cryptographer extends Component
      * @param   mixed   number(s) to be hashed 1 | "12" | [1, 2]
      * @return  string  URL safe hashed string [A-Za-z0-9]
      */
-    public function hashIdsEncode($number): string
+    public function maskNumbers($number): string
     {
         return $this->getHashIds()->encode($number);
     }
@@ -55,7 +55,7 @@ class Cryptographer extends Component
      * @param   string  URL safe hashed string [A-Za-z0-9]
      * @return  [int]   list of decoded numbers [1] | [12] | [1, 2]
      */
-    public function hashIdsDecode(string $str): array
+    public function unmaskNumbers(string $str): array
     {
         $number = $this->getHashIds()->decode($str);
         return $number;

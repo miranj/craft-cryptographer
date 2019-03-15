@@ -20,42 +20,53 @@ class CryptographerTwigExtension extends Twig_Extension
     {
         $needs_env = ['needs_environment' => true];
         return [
-            new Twig_Filter('maskNumbers', [$this, 'hashidsEncodeFilter']),
-            new Twig_Filter('unmaskNumbers', [$this, 'hashidsDecodeFilter']),
             new Twig_Filter('encrypt', [$this, 'encryptFilter']),
             new Twig_Filter('decrypt', [$this, 'decryptFilter']),
+            new Twig_Filter('maskNumbers', [$this, 'maskNumbersFilter']),
+            new Twig_Filter('unmaskNumbers', [$this, 'unmaskNumbersFilter']),
             new Twig_Filter('maskLegacy', [$this, 'maskLegacyFilter'], $needs_env),
             new Twig_Filter('unmaskLegacy', [$this, 'unmaskLegacyFilter'], $needs_env),
         ];
     }
     
+    
+    
     /**
      * @param   int     number to be hashid'd
      * @return  string  hashid'd result
      */
-    public function hashidsEncodeFilter($str): string
+    public function maskNumbersFilter($str): string
     {
-        return Plugin::getInstance()->cryptographer->hashIdsEncode($str);
+        return Plugin::getInstance()->cryptographer->maskNumbers($str);
     }
     
     /**
      * @param   string      hashid to be decoded
      * @return  int|null    number that was originally encoded
      */
-    public function hashidsDecodeFilter($str): string
+    public function unmaskNumbersFilter($str): string
     {
-        return implode(',', Plugin::getInstance()->cryptographer->hashIdsDecode((string)$str));
+        return implode(',', Plugin::getInstance()->cryptographer->unmaskNumbers((string)$str));
     }
     
+    /**
+     * @param   string      data to be encrypted
+     * @return  string      URL-safe cipher text
+     */
     public function encryptFilter($str): string
     {
         return Plugin::getInstance()->cryptographer->encrypt((string)$str);
     }
     
+    /**
+     * @param   string      cipher text to be decrypted
+     * @return  string      original data that was encrypted
+     */
     public function decryptFilter($str): string
     {
         return Plugin::getInstance()->cryptographer->decrypt((string)$str);
     }
+    
     
     
     /**
