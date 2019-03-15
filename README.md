@@ -20,7 +20,7 @@ Contents
 - [Usage](#usage)
   - [Secure Encryption](#secure-encryption)
   - [Masking Numbers](#masking-numbers)
-  - [Legacy](#legacy)
+  - [Legacy Methods](#legacy-methods)
 - [Configuration](#configuration)
 - [Installation](#installation)
 - [Requirements](#requirements)
@@ -49,10 +49,8 @@ Use this method to encrypt sensitive information. It differs from the native [`e
 #### Templating
 ```twig
 {{ 'Sensitive data' | encrypt }}
-{{
-  'Y3J5cHQ64Q8YoiXmSUYq6c2mcg6YjmVjNTBkNGViNmE4M2FiNTVmYTdkZTUyYjJhZmNjNzY5NWRiNDc5M2ExNzRhZTE1ZWZmMjU2NzFkMDNhMzEyZWIX9Rj4f4vOKB2XCljjXha3aKfJw4c6D-T7zMoXhKpeFw=='
-  | decrypt
-}}
+{{ 'Y3J5cHQ64Q8YoiXmSUYq6c2mcg6YjmVjNTBkNGViNmE4M2FiNTVmYTdkZTUyYjJhZmNjNzY5NWRiNDc5M2ExNzRhZTE1ZWZmMjU2NzFkMDNhMzEyZWIX9Rj4f4vOKB2XCljjXha3aKfJw4c6D-T7zMoXhKpeFw=='
+   | decrypt }}
 ```
 
 #### API
@@ -83,7 +81,7 @@ $numbers = \miranj\cryptographer\Plugin::getInstance()->cryptographer->unmaskNum
 
 
 
-### Legacy
+### Legacy Methods
 
 _Important: This method should not be considered cryptographically secure. Avoid using it for encoding sensitive data like passwords._
 
