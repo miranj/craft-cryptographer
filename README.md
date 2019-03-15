@@ -3,11 +3,11 @@
 Cryptographer
 =============
 
-A [Craft CMS][] 3 plugin that adds [Twig][] filters to perform cryptographic and masking operations. Useful for situations such as:
+A [Craft CMS][] 3 plugin that adds [Twig][] filters to encrypt and decrypt content via URL-safe strings. Useful for situations such as:
 
-- Generating single-use URLs such as for private pages
-- Masking numeric IDs as strings like `dQw4w9WgXcQ` in [`youtube.com/watch?v=dQw4w9WgXcQ`][yt]
-- Generating per-user URLs for users without revealing their username, email or ids
+- Generating single-use URLs, such as for private pages
+- Masking numeric IDs like 521 as strings, as in [`youtube.com/watch?v=dQw4w9WgXcQ`][yt]
+- Generating URLs for users or entries without revealing their usernames, slugs or IDs
 
 [craft cms]:https://craftcms.com/
 [twig]:https://twig.symfony.com/
@@ -32,7 +32,7 @@ Contents
 Usage
 -----
 
-Cryptographer offers two broad options to transform data into ciphertext, and back from ciphertext to original data. One is cryptographically secure and based on Craft's [Security component][cs1] (which is in turn [based on Yii's][ys1]). The other is _not secure_ and based on the popular [Hashids][] library. Both options produce URL safe strings.
+Cryptographer offers two broad options to transform data into ciphertext, and back from ciphertext to original data. One is cryptographically secure and based on Craft's [security component][cs1] (which is in turn [based on Yii's][ys1]). The other is _not secure_ and based on the popular [Hashids][] library. Both options produce URL-safe strings.
 
 [hashids]:https://hashids.org/php/
 [cs1]:https://docs.craftcms.com/api/v3/craft-services-security.html
@@ -42,16 +42,20 @@ Cryptographer offers two broad options to transform data into ciphertext, and ba
 
 ### Secure Encryption
 
-Use this method to encrypt sensitive information. It differs from the native `encenc` filter in that the output is always a URL-safe string. Note that the cipher generated each time will be different. So this is good for generating single use tokens, but not a good candidate for generating permanent URLs.
+Use this method to encrypt sensitive information. It differs from the native [`encenc`][enc] filter in that the output is always a URL-safe string. Note that the cipher generated each time will be different. So this is good for generating single use tokens, but not a good candidate for generating permanent URLs.
+
+[enc]:https://docs.craftcms.com/v3/dev/filters.html#encenc
 
 #### Templating
 ```twig
 {{ 'Sensitive data' | encrypt }}
-{{ 'Y3J5cHQ64Q8YoiXmSUYq6c2mcg6YjmVjNTBkNGViNmE4M2FiNTVmYTdkZTUyYjJhZmNjNzY5NWRiNDc5M2ExNzRhZTE1ZWZmMjU2NzFkMDNhMzEyZWIX9Rj4f4vOKB2XCljjXha3aKfJw4c6D-T7zMoXhKpeFw==' | decrypt }}
+{{
+  'Y3J5cHQ64Q8YoiXmSUYq6c2mcg6YjmVjNTBkNGViNmE4M2FiNTVmYTdkZTUyYjJhZmNjNzY5NWRiNDc5M2ExNzRhZTE1ZWZmMjU2NzFkMDNhMzEyZWIX9Rj4f4vOKB2XCljjXha3aKfJw4c6D-T7zMoXhKpeFw=='
+  | decrypt
+}}
 ```
 
 #### API
-
 ```php
 $ciphertext = \miranj\cryptographer\Plugin::getInstance()->cryptographer->encrypt('Sensitive data');
 $originaltext = \miranj\cryptographer\Plugin::getInstance()->cryptographer->decrypt($ciphertext);
@@ -61,7 +65,7 @@ $originaltext = \miranj\cryptographer\Plugin::getInstance()->cryptographer->decr
 
 ### Masking Numbers
 
-_Important: These methods should not be considered cryptographically secure. Avoid using them for encoding sensitive data like passwords._
+_Important: This method should not be considered cryptographically secure. Avoid using it for encoding sensitive data like passwords._
 
 This method converts numbers like 457 into strings like `'qan8deK8'`. Use this method to mask numbers such as element IDs (or a list of IDs) for use inside URLs. It is a wrapper for the popular [Hashids][] library.
 
@@ -72,7 +76,6 @@ This method converts numbers like 457 into strings like `'qan8deK8'`. Use this m
 ```
 
 #### API
-
 ```php
 $mask = \miranj\cryptographer\Plugin::getInstance()->cryptographer->maskNumbers([521]);
 $numbers = \miranj\cryptographer\Plugin::getInstance()->cryptographer->unmaskNumbers('qan8deK8');
@@ -82,7 +85,7 @@ $numbers = \miranj\cryptographer\Plugin::getInstance()->cryptographer->unmaskNum
 
 ### Legacy
 
-_Important: These methods should not be considered cryptographically secure. Avoid using them for encoding sensitive data like passwords._
+_Important: This method should not be considered cryptographically secure. Avoid using it for encoding sensitive data like passwords._
 
 Cryptographer provides a third method of masking and unmasking strings which is deprecated in v1.x. It is offerred purely for backwards compatibility of sites that were using the Craft 2 version of this plugin (v0.x) and have content that needs to be converted back to the original. 
 
