@@ -3,7 +3,7 @@
 Release notes for the Cryptographer Craft CMS plugin.
 
 
-## Unreleased
+## 1.0.1 - 2019-07-25
 
 ### Changed
 - Updated Hashids to 3.0 (on supported environments).
