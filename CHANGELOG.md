@@ -5,6 +5,9 @@ Release notes for the Cryptographer Craft CMS plugin.
 
 ## Unreleased
 
+### Changed
+- Updated Hashids to 3.0 (on supported environments).
+
 ### Fixed
 - Fixed an error that prevented the plugin from getting installed. ([#2](https://github.com/miranj/craft-cryptographer/issues/2))
 
