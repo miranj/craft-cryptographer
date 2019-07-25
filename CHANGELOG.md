@@ -3,6 +3,12 @@
 Release notes for the Cryptographer Craft CMS plugin.
 
 
+## Unreleased
+
+### Fixed
+- Fixed an error that prevented the plugin from getting installed. ([#2](https://github.com/miranj/craft-cryptographer/issues/2))
+
+
 
 ## 1.0.0 - 2019-03-15
 

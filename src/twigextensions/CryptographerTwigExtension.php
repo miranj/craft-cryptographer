@@ -3,7 +3,7 @@
 namespace miranj\cryptographer\twigextensions;
 
 use Craft;
-use Craft\web\twig\Environment;
+use craft\web\twig\Environment;
 use miranj\cryptographer\Plugin;
 use Twig_Extension;
 use Twig_Filter;

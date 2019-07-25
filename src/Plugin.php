@@ -16,7 +16,7 @@ use miranj\cryptographer\services\Cryptographer;
 use miranj\cryptographer\twigextensions\CryptographerTwigExtension;
 
 
-class Plugin extends craft\base\Plugin
+class Plugin extends \craft\base\Plugin
 {
     /**
      * @inheritdoc
