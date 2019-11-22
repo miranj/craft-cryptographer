@@ -12,7 +12,17 @@ class Settings extends Model
 {
     // Public Properties
     // =========================================================================
-    
+
+    /**
+     * @var string|null
+     */
+    public $alphabet = null;
+
+    /**
+     * @var int|null
+     */
+    public $hashMinLength = 15;
+
     /**
      * @var string|null
      */
@@ -25,7 +35,8 @@ class Settings extends Model
     public function rules()
     {
         return [
-            [['secret'], 'string'],
+            [['alphabet', 'secret'], 'string'],
+            [['hashMinLength'], 'numerical'],
         ];
     }    
 }

@@ -17,10 +17,14 @@ class Cryptographer extends Component
 {
     private $_prefix = 'crypt:';
     private $_hashIds = null;
+    protected $alphabet = null;
+    protected $hashMinLength = null;
     protected $secret = null;
     
     public function __construct()
     {
+        $this->alphabet = Plugin::getInstance()->settings->alphabet;
+        $this->hashMinLength = Plugin::getInstance()->settings->hashMinLength;
         $this->secret = Plugin::getInstance()->settings->secret ?: Craft::$app->config->general->securityKey;
     }
     
@@ -33,7 +37,7 @@ class Cryptographer extends Component
     public function getHashIds()
     {
         if ($this->_hashIds === null) {
-            $this->_hashIds = new Hashids($this->secret, 15);
+            $this->_hashIds = new Hashids($this->secret, $this->hashMinLength, $this->alphabet);
         }
         return $this->_hashIds;
     }
