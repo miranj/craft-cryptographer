@@ -123,7 +123,24 @@ To configue Cryptographer, create a `cryptographer.php` file in your [`config/`]
 [config]:https://docs.craftcms.com/v3/config/
 [multi]:https://docs.craftcms.com/v3/config/environments.html#multi-environment-configs
 
-Currently the only supported setting is:
+Here is a sample config file along with a list of all possible settings and their default values:
+
+```php
+<?php
+
+return [
+    // hashids
+    'hashidsMinLength' => 15,   // pad output to fit at least a certain length
+    'hashidsAlphabet' => null,  // use a custom alphabet, eg: 'abcdefghijklmnopqrstuvwxyz'
+    
+    // legacy
+    'secret' => null,           // defaults to using Craft's securityKey
+];
+```
+
+-  `hashidsMinLength` – Configure Hashids to ensure the output is of a certain length. The resultant string may not be exactly of this length, but will not be shorter than this number.
+
+-  `hashidsAlphabet` – Use a custom alphabet to generate the output string. The default alphabet used by Hashids is `'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'`.
 
 -  `secret` – A private, cryptographically-secure key that is used for encrypting and decrypting data. Default value is `null`, in which case the plugin uses [`securityKey`](sk) from Craft's general config.
    

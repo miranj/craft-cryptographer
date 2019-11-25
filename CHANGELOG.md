@@ -3,6 +3,13 @@
 Release notes for the Cryptographer Craft CMS plugin.
 
 
+## Unreleased
+
+### Added
+- Added `hashidsAlphabet` and `hashidsMinLength` config options. ([#3](https://github.com/miranj/craft-cryptographer/pull/3) by [@oddnavy](https://github.com/oddnavy))
+
+
+
 ## 1.0.2 - 2019-07-31
 
 ### Fixed
