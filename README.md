@@ -25,6 +25,7 @@ Contents
 - [Installation](#installation)
 - [Requirements](#requirements)
 - [Changelog](./CHANGELOG.md)
+- [Contributors](https://github.com/miranj/craft-cryptographer/graphs/contributors)
 - [License](./LICENSE)
 
 
