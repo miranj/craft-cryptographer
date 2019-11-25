@@ -16,7 +16,18 @@ class Settings extends Model
     /**
      * @var string|null
      */
+    public $hashidsAlphabet = null;
+    
+    /**
+     * @var int|null
+     */
+    public $hashidsMinLength = 15;
+    
+    /**
+     * @var string|null
+     */
     public $secret = null;
+    
     
     
     /**
@@ -25,7 +36,8 @@ class Settings extends Model
     public function rules()
     {
         return [
-            [['secret'], 'string'],
+            [['hashidsAlphabet', 'secret'], 'string'],
+            [['hashidsMinLength'], 'numerical'],
         ];
-    }    
+    }
 }

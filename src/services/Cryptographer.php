@@ -33,7 +33,11 @@ class Cryptographer extends Component
     public function getHashIds()
     {
         if ($this->_hashIds === null) {
-            $this->_hashIds = new Hashids($this->secret, 15);
+            $hashidsAlphabet = Plugin::getInstance()->settings->hashidsAlphabet;
+            $hashidsMinLength = Plugin::getInstance()->settings->hashidsMinLength;
+            $this->_hashIds = $hashidsAlphabet === null
+                ? new Hashids($this->secret, $hashidsMinLength)
+                : new Hashids($this->secret, $hashidsMinLength, $hashidsAlphabet);
         }
         return $this->_hashIds;
     }
@@ -142,4 +146,3 @@ class Cryptographer extends Component
         return $plaintext;
     }
 }
-
