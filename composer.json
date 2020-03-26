@@ -2,7 +2,7 @@
   "name": "miranj/craft-cryptographer",
   "description": "Adds Twig filters to perform cryptographic operations.",
   "type": "craft-plugin",
-  "version": "1.0.3",
+  "version": "1.0.4-dev",
   "keywords": [
     "craft",
     "craftcms",
@@ -24,7 +24,7 @@
   },
   "require": {
     "craftcms/cms": "^3.0.0",
-    "hashids/hashids": "^2.0 || ^3.0"
+    "hashids/hashids": "^2.0 || ^3.0 || ^4.0"
   },
   "autoload": {
     "psr-4": {
