@@ -172,7 +172,7 @@ Open your terminal and run the following commands:
     composer require miranj/craft-cryptographer
     
     # tell Craft to install the plugin
-    ./craft install/plugin cryptographer
+    ./craft plugin/install cryptographer
     
 
 
