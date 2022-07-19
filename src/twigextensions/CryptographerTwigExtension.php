@@ -5,11 +5,11 @@ namespace miranj\cryptographer\twigextensions;
 use Craft;
 use craft\web\twig\Environment;
 use miranj\cryptographer\Plugin;
-use Twig_Extension;
-use Twig_Filter;
-use Twig_Markup;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use Twig\Markup;
 
-class CryptographerTwigExtension extends Twig_Extension
+class CryptographerTwigExtension extends AbstractExtension
 {
     public function getName()
     {
@@ -20,12 +20,12 @@ class CryptographerTwigExtension extends Twig_Extension
     {
         $needs_env = ['needs_environment' => true];
         return [
-            new Twig_Filter('encrypt', [$this, 'encryptFilter']),
-            new Twig_Filter('decrypt', [$this, 'decryptFilter']),
-            new Twig_Filter('maskNumbers', [$this, 'maskNumbersFilter']),
-            new Twig_Filter('unmaskNumbers', [$this, 'unmaskNumbersFilter']),
-            new Twig_Filter('maskLegacy', [$this, 'maskLegacyFilter'], $needs_env),
-            new Twig_Filter('unmaskLegacy', [$this, 'unmaskLegacyFilter'], $needs_env),
+            new TwigFilter('encrypt', [$this, 'encryptFilter']),
+            new TwigFilter('decrypt', [$this, 'decryptFilter']),
+            new TwigFilter('maskNumbers', [$this, 'maskNumbersFilter']),
+            new TwigFilter('unmaskNumbers', [$this, 'unmaskNumbersFilter']),
+            new TwigFilter('maskLegacy', [$this, 'maskLegacyFilter'], $needs_env),
+            new TwigFilter('unmaskLegacy', [$this, 'unmaskLegacyFilter'], $needs_env),
         ];
     }
     
@@ -79,7 +79,7 @@ class CryptographerTwigExtension extends Twig_Extension
     {
         $charset = $env->getCharset();
         $data = Plugin::getInstance()->cryptographer->maskLegacy($plaintext, $method, $iv);
-        return new Twig_Markup($data, $charset);
+        return new Markup($data, $charset);
     }
     
     /**
@@ -92,7 +92,7 @@ class CryptographerTwigExtension extends Twig_Extension
     {
         $charset = $env->getCharset();
         $plaintext = Plugin::getInstance()->cryptographer->unmaskLegacy($data, $method);
-        return new Twig_Markup($plaintext, $charset);
+        return new Markup($plaintext, $charset);
     }
     
 }
