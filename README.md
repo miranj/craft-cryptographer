@@ -3,7 +3,7 @@
 Cryptographer
 =============
 
-A [Craft CMS][] 3 plugin that adds [Twig][] filters to encrypt and decrypt content via URL-safe strings. Useful for situations such as:
+A [Craft CMS][] plugin that adds [Twig][] filters to encrypt and decrypt content via URL-safe strings. Useful for situations such as:
 
 - Generating single-use URLs, such as for private pages
 - Masking numeric IDs like 521 as strings, as in [`youtube.com/watch?v=dQw4w9WgXcQ`][yt]
@@ -179,7 +179,7 @@ Open your terminal and run the following commands:
 
 Requirements
 ------------
-This plugin requires Craft CMS 3.0.0 or later. The Craft 2 version is availabe in [the `v0` branch](https://github.com/miranj/craft-cryptographer/tree/v0).
+This plugin requires Craft CMS 3 or 4. The Craft 2 version is availabe in [the `v0` branch](https://github.com/miranj/craft-cryptographer/tree/v0).
 
 
 

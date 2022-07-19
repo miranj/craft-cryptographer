@@ -1,6 +1,6 @@
 <?php
 /**
- * Cryptographer plugin for Craft CMS 3.x
+ * Cryptographer plugin for Craft CMS 3.x, 4.x
  *
  * Adds Twig filters to perform cryptographic operations.
  *
