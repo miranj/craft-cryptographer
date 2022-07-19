@@ -2,7 +2,7 @@
   "name": "miranj/craft-cryptographer",
   "description": "Adds Twig filters to perform cryptographic operations.",
   "type": "craft-plugin",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "keywords": [
     "craft",
     "craftcms",
