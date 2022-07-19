@@ -28,7 +28,7 @@ Release notes for the Cryptographer Craft CMS plugin.
 ## 1.0.2 - 2019-07-31
 
 ### Fixed
-- Fixed plugin icon
+- Fixed plugin icon.
 
 
 
